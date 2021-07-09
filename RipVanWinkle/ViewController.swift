@@ -24,8 +24,12 @@ class ViewController: UIViewController {
     lazy var dataSource = UITableViewDiffableDataSource<Status, Show.ID>(tableView: tableView) { [unowned self] tableView, indexPath, showIdentifier in
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let show = self.shows.filter({ $0.id == showIdentifier }).first!
-        cell.textLabel?.text = show.title
-        cell.detailTextLabel?.text = show.network
+
+        var configuration = UIListContentConfiguration.subtitleCell()
+        configuration.text = show.title
+        configuration.secondaryText = show.network
+        cell.contentConfiguration = configuration
+        
         return cell
     }
     
@@ -34,21 +38,26 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "header")
         
-        updateSnapshot()
+        tableView.delegate = self
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 45
+        
+        updateSnapshot(animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [unowned self] in 
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) { [unowned self] in
             if let index = shows.firstIndex(where: { $0.title == "Ted Lasso" }) {
                 shows[index].status = .favorite
             }
-            updateSnapshot()
+            updateSnapshot(animated: true)
         }
     }
     
-    func updateSnapshot() {
+    func updateSnapshot(animated: Bool) {
         var snapshot = NSDiffableDataSourceSnapshot<Status, Show.ID>()
         
         snapshot.appendSections(Status.allCases)
@@ -56,7 +65,20 @@ class ViewController: UIViewController {
         snapshot.appendItems(shows.filter({ $0.status == .watching }).map(\.id), toSection: .watching)
         snapshot.appendItems(shows.filter({ $0.status == .watched }).map(\.id), toSection: .watched)
         
-        dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource.apply(snapshot, animatingDifferences: animated)
+    }
+}
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header")
+        let section = Status(rawValue: section)!
+        
+        var configuration = UIListContentConfiguration.prominentInsetGroupedHeader()
+        configuration.text = section.title
+        header?.contentConfiguration = configuration
+        
+        return header
     }
 }
 
@@ -67,6 +89,14 @@ struct Show: Hashable, Identifiable {
     var status: Status
 }
 
-enum Status: Hashable, CaseIterable {
+enum Status: Int, Hashable, CaseIterable {
     case favorite, watching, watched
+    
+    var title: String {
+        switch self {
+        case .favorite: return "Favorites"
+        case .watching: return "Watching"
+        case .watched: return "Watched"
+        }
+    }
 }
