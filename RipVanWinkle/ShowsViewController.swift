@@ -1,13 +1,14 @@
 //
-//  ViewController.swift
+//  ShowsViewController.swift
 //  RipVanWinkle
 //
 //  Created by Jason on 7/8/21.
 //
 
 import UIKit
+import SwiftUI
 
-class ViewController: UIViewController {
+class ShowsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var shows: [Show] = [
@@ -25,11 +26,10 @@ class ViewController: UIViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let show = self.shows.filter({ $0.id == showIdentifier }).first!
 
-        var configuration = UIListContentConfiguration.subtitleCell()
-        configuration.text = show.title
-        configuration.secondaryText = show.network
+        var configuration = ShowContentConfiguration(title: show.title,
+                                                detail: show.network,
+                                                isFavorite: show.status == .favorite)
         cell.contentConfiguration = configuration
-        
         return cell
     }
     
@@ -65,11 +65,12 @@ class ViewController: UIViewController {
         snapshot.appendItems(shows.filter({ $0.status == .watching }).map(\.id), toSection: .watching)
         snapshot.appendItems(shows.filter({ $0.status == .watched }).map(\.id), toSection: .watched)
         
+        snapshot.reconfigureItems(shows.map(\.id))
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
 }
 
-extension ViewController: UITableViewDelegate {
+extension ShowsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header")
         let section = Status(rawValue: section)!
@@ -79,24 +80,5 @@ extension ViewController: UITableViewDelegate {
         header?.contentConfiguration = configuration
         
         return header
-    }
-}
-
-struct Show: Hashable, Identifiable {
-    let id = UUID()
-    let title: String
-    let network: String
-    var status: Status
-}
-
-enum Status: Int, Hashable, CaseIterable {
-    case favorite, watching, watched
-    
-    var title: String {
-        switch self {
-        case .favorite: return "Favorites"
-        case .watching: return "Watching"
-        case .watched: return "Watched"
-        }
     }
 }
