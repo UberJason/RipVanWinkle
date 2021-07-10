@@ -1,5 +1,5 @@
 //
-//  ShowsViewController.swift
+//  ShowsTableViewController.swift
 //  RipVanWinkle
 //
 //  Created by Jason on 7/8/21.
@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-class ShowsViewController: UIViewController {
+class ShowsTableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var shows: [Show] = [
@@ -70,7 +70,7 @@ class ShowsViewController: UIViewController {
     }
 }
 
-extension ShowsViewController: UITableViewDelegate {
+extension ShowsTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header")
         let section = Status(rawValue: section)!

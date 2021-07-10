@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2xr-ha-fpj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IiK-vi-xet">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,13 +12,13 @@
         <!--TV Shows-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="TV Shows" id="BYZ-38-t0r" customClass="ShowsViewController" customModule="RipVanWinkle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="TV Shows" id="BYZ-38-t0r" customClass="ShowsTableViewController" customModule="RipVanWinkle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vWq-IR-Dpk">
-                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
                                 <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -37,12 +38,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="928.98550724637687" y="93.75"/>
+            <point key="canvasLocation" x="1839.1304347826087" y="93.75"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Table View-->
         <scene sceneID="Dl9-67-RD4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2xr-ha-fpj" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Table View" id="KHT-Wa-H4c">
+                        <imageReference key="image" image="list.bullet.rectangle.portrait" catalog="system"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="EaN-PH-Vdn">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -55,10 +59,67 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KYE-dy-yfQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="928.98550724637687" y="93.75"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ove-hZ-epZ">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="IiK-vi-xet" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hBG-IC-Tgt">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="2xr-ha-fpj" kind="relationship" relationship="viewControllers" id="XFq-eL-Zvk"/>
+                        <segue destination="LJ0-k1-tAm" kind="relationship" relationship="viewControllers" id="4Az-5i-YDC"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fwy-Ub-e8g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="18.840579710144929" y="93.75"/>
+        </scene>
+        <!--TV Shows-->
+        <scene sceneID="nt6-Wp-uDU">
+            <objects>
+                <viewController title="TV Shows" id="J8e-cd-9He" customClass="ShowsCollectionViewController" customModule="RipVanWinkle" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4an-11-w4A">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="he2-UF-L98"/>
+                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="TV Shows" id="WTI-Wz-Tvn"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mw0-bn-94X" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1839" y="799"/>
+        </scene>
+        <!--Collection View-->
+        <scene sceneID="PKq-G6-yW0">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LJ0-k1-tAm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Collection View" id="VZS-3c-LUN">
+                        <imageReference key="image" image="square.grid.2x2" catalog="system"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="adV-t0-Z5t">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="J8e-cd-9He" kind="relationship" relationship="rootViewController" id="WJN-Tq-CHJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Yz-Oy-5Lw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="929" y="799"/>
         </scene>
     </scenes>
     <resources>
+        <image name="list.bullet.rectangle.portrait" catalog="system" width="115" height="128"/>
+        <image name="square.grid.2x2" catalog="system" width="128" height="114"/>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
